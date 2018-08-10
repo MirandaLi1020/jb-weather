@@ -1,0 +1,23 @@
+{
+  "name": "jb-weather",
+  "version": "1.0.0",
+  "description": "JB Weather API",
+  "scripts": {
+    "test": "NODE_ENV=test mocha --opts ./test/unit-tests.opts",
+    "lint": "standard"
+  },
+  "author": "Yunzhi Hou",
+  "license": "ISC",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "config": "^2.0.1",
+    "debug": "^3.1.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "standard": "^11.0.1"
+  }
+}
