@@ -12,6 +12,18 @@ This application has 3 components
   * Return rate limiting data as HTTP header https://developer.github.com/v3/#rate-limiting
 * A function to consume OpenWeatherMap API and return weather description to client
 
+# How to Test
+
+JS Lint using Standard https://standardjs.com/
+```
+npm run lint
+```
+
+Test using mocha https://mochajs.org/
+```
+npm test
+```
+
 # Project Files
 
 * `JBHi-Fi_Nodejs_Challenge.pdf` | JB Hi-Fi Node.js programming challenge
