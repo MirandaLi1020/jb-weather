@@ -1,4 +1,4 @@
-/* globals describe, it, before */
+/* globals describe, it */
 /* eslint no-unused-expressions: 0 */
 
 const chai = require('chai')
@@ -53,13 +53,13 @@ const MOCK_INVALID_CITY = 'lonlon'
 const MOCK_TRIGGER_SERVER_ERROR_COUNTRY = 'server_error'
 const MOCK_TRIGGER_SERVER_ERROR_CITY = 'server_error'
 
-const MOCK_VALID_JSON_RESULT = { "coord": { "lon": -0.13, "lat": 51.51 }, "weather": [{ "id": 300, "main": "Drizzle", "description": "light intensity drizzle", "icon": "09d" }], "base": "stations", "main": { "temp": 280.32, "pressure": 1012, "humidity": 81, "temp_min": 279.15, "temp_max": 281.15 }, "visibility": 10000, "wind": { "speed": 4.1, "deg": 80 }, "clouds": { "all": 90 }, "dt": 1485789600, "sys": { "type": 1, "id": 5091, "message": 0.0103, "country": "GB", "sunrise": 1485762037, "sunset": 1485794875 }, "id": 2643743, "name": "London", "cod": 200 }
+const MOCK_VALID_JSON_RESULT = { 'coord': { 'lon': -0.13, 'lat': 51.51 }, 'weather': [{ 'id': 300, 'main': 'Drizzle', 'description': 'light intensity drizzle', 'icon': '09d' }], 'base': 'stations', 'main': { 'temp': 280.32, 'pressure': 1012, 'humidity': 81, 'temp_min': 279.15, 'temp_max': 281.15 }, 'visibility': 10000, 'wind': { 'speed': 4.1, 'deg': 80 }, 'clouds': { 'all': 90 }, 'dt': 1485789600, 'sys': { 'type': 1, 'id': 5091, 'message': 0.0103, 'country': 'GB', 'sunrise': 1485762037, 'sunset': 1485794875 }, 'id': 2643743, 'name': 'London', 'cod': 200 }
 const mockValidResponse = createFetchMockResponse(true, 200, MOCK_VALID_JSON_RESULT)
 
-const MOCK_INVALID_API_KEY_JSON_RESULT = { "cod": 401, "message": "Invalid API key. Please see http://openweathermap.org/faq#error401 for more info." }
+const MOCK_INVALID_API_KEY_JSON_RESULT = { 'cod': 401, 'message': 'Invalid API key. Please see http://openweathermap.org/faq#error401 for more info.' }
 const mockInvalidApiKeyResponse = createFetchMockResponse(false, 401, MOCK_INVALID_API_KEY_JSON_RESULT)
 
-const MOCK_CITY_NOT_FOUND_JSON_RESULT = { "cod": "404", "message": "city not found" }
+const MOCK_CITY_NOT_FOUND_JSON_RESULT = { 'cod': '404', 'message': 'city not found' }
 const mockNotFoundResponse = createFetchMockResponse(false, 404, MOCK_CITY_NOT_FOUND_JSON_RESULT)
 
 const mockServerErrorResponse = createFetchMockResponse(false, 500)
