@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "JB Weather API",
   "scripts": {
-    "test": "NODE_ENV=test DEBUG=jb-weather:sdk:open-weather-map-sdk:* mocha --opts ./test/unit-tests.opts",
+    "test": "NODE_ENV=test DEBUG=jb-weather:* mocha --opts ./test/unit-tests.opts",
     "lint": "standard"
   },
   "author": "Yunzhi Hou",
@@ -13,11 +13,14 @@
   },
   "dependencies": {
     "config": "^2.0.1",
-    "debug": "^3.1.0"
+    "debug": "^3.1.0",
+    "restify": "^7.2.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
-    "standard": "^11.0.1"
+    "standard": "^11.0.1",
+    "node-mocks-http": "^1.7.0",
+    "sinon": "^6.1.5"
   }
 }
