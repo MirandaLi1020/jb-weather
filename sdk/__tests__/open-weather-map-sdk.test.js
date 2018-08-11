@@ -6,9 +6,7 @@ const expect = chai.expect
 const config = require('config')
 const debug = require('debug')('jb-weather:sdk:open-weather-map-sdk:test')
 
-const OpenWeatherMapSdk = require('./open-weather-map-sdk')
-const SdkConstants = require('./sdk-constants')
-const SdkErrors = require('./sdk-errors')
+const { OpenWeatherMapSdk, SdkConstants, SdkErrors } = require('../')
 
 // Mockups
 const { apiHost: VALID_API_HOST, apiKey: VALID_API_KEY } = config.openWeatherMapApi
