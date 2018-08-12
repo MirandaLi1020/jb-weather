@@ -1,7 +1,6 @@
 const debug = require('debug')('jb-weather:weather:weather-model')
 const { logger } = require('../utils')
-const WeatherModelErrors = require('./weather-model-errors')
-const { NotFoundWeatherByCountryAndCityError, AccessDeniedError, PleaseRetryError } = WeatherModelErrors
+const { NotFoundWeatherByCountryAndCityError, AccessDeniedError, PleaseRetryError } = require('./weather-model-errors')
 const { SdkErrors } = require('../sdk')
 
 /**

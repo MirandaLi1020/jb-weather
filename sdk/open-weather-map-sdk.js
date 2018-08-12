@@ -16,7 +16,7 @@ const createOpenWeatherMapSdk = ({ apiHost, apiKey, fetchLib = require('node-fet
      * GET Weather data from OpenWeatherMap API
      * @param {string} country Country name
      * @param {string} city City name
-     * @return {object} Weather data
+     * @return {Promise} Weather data as Promise
      */
     const getWeatherByCountryAndCity = async (country = '', city = '') => {
       const uri = encodeURI(`${apiHost}${WEATHER_API_PATH}?${WEATHER_API_QUERY_BY_CITY_NAME}=${city.toLowerCase()},${country.toLowerCase()}&${WEATHER_API_QUERY_API_KEY}=${apiKey}`)
