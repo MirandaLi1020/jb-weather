@@ -30,12 +30,12 @@ const createFetchMockResponse = async (ok = false, status = 500, json, text) => 
     status: status
   }
   if (json) {
-    response.json = async json => {
+    response.json = async () => {
       return json
     }
   }
   if (text) {
-    response.text = async text => {
+    response.text = async () => {
       return text
     }
   }
@@ -121,14 +121,10 @@ describe('open-weather-map-sdk tests', () => {
       expect(openWeatherMapSdk.getWeatherByCountryAndCity, 'function getWeatherByCountryAndCity should exist').to.exist
     })
     it('should return weather result for valid country and city', async () => {
-      try {
-        const result = await openWeatherMapSdk.getWeatherByCountryAndCity(MOCK_VALID_COUNTRY, MOCK_VALID_CITY)
-        debug('result', result)
-        expect(result, 'should have a result').to.exist
-        expect(result.weather[0].description, 'should have weather description as few clouds').to.equal('few clouds')
-      } catch (error) {
-        expect(error, 'should NOT have any error').to.not.exist
-      }
+      const result = await openWeatherMapSdk.getWeatherByCountryAndCity(MOCK_VALID_COUNTRY, MOCK_VALID_CITY)
+      debug('result', result)
+      expect(result, 'should have a result').to.exist
+      expect(result.weather[0].description, 'should have weather description as light intensity drizzle').to.equal('light intensity drizzle')
     })
     it('should return NotFoundError for invalid country and city name', async () => {
       try {
