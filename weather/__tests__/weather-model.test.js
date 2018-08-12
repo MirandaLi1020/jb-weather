@@ -24,7 +24,7 @@ const MOCK_TRIGGER_INVALID_API_KEY_ERROR_CITY = 'invalid_api_key'
 
 const mockOpenWeatherMapSdk = {
   getWeatherByCountryAndCity: async (country, city) => {
-    if (country === MOCK_VALID_COUNTRY && city === MOCK_INVALID_CITY) {
+    if (country === MOCK_VALID_COUNTRY && city === MOCK_VALID_CITY) {
       // Valid country + valid city returns weather data
       return { 'coord': { 'lon': -0.13, 'lat': 51.51 }, 'weather': [{ 'id': 300, 'main': 'Drizzle', 'description': 'light intensity drizzle', 'icon': '09d' }], 'base': 'stations', 'main': { 'temp': 280.32, 'pressure': 1012, 'humidity': 81, 'temp_min': 279.15, 'temp_max': 281.15 }, 'visibility': 10000, 'wind': { 'speed': 4.1, 'deg': 80 }, 'clouds': { 'all': 90 }, 'dt': 1485789600, 'sys': { 'type': 1, 'id': 5091, 'message': 0.0103, 'country': 'GB', 'sunrise': 1485762037, 'sunset': 1485794875 }, 'id': 2643743, 'name': 'London', 'cod': 200 }
     } else if (country === MOCK_INVALID_COUNTRY && city === MOCK_INVALID_CITY) {
@@ -72,14 +72,10 @@ describe('weather-model tests', () => {
       expect(weatherModel.getWeatherDescriptionByCountryAndCity, 'function getWeatherDescriptionByCountryAndCity should exist').to.exist
     })
     it('should return weather description text for valid country and city', async () => {
-      try {
-        const result = await weatherModel.getWeatherDescriptionByCountryAndCity(MOCK_VALID_COUNTRY, MOCK_VALID_CITY)
-        debug('result', result)
-        expect(result, 'should have a result').to.exist
-        expect(result, 'result should be "few clouds"').to.equal('few clouds')
-      } catch (error) {
-        expect(error, 'should NOT have any error').to.not.exist
-      }
+      const result = await weatherModel.getWeatherDescriptionByCountryAndCity(MOCK_VALID_COUNTRY, MOCK_VALID_CITY)
+      debug('result', result)
+      expect(result, 'should have a result').to.exist
+      expect(result, 'result should be "light intensity drizzle"').to.equal('light intensity drizzle')
     })
     it('should return NotFoundWeatherByCountryAndCityError for invalid country and city name', async () => {
       try {
