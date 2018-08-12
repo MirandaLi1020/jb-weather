@@ -5,7 +5,6 @@ const chai = require('chai')
 const expect = chai.expect
 const httpMocks = require('node-mocks-http')
 const sinon = require('sinon')
-const { NotFoundError, InternalServerError, BadRequestError } = require('restify-errors')
 const debug = require('debug')('jb-weather:weather:weather-controller:test')
 
 const WeatherModelErrors = require('../weather-model-errors')
@@ -109,59 +108,44 @@ describe('weather-controller tests', () => {
       expect(weatherController.get, 'function get should exist').to.exist
     })
     it('should return weather data for valid country and city', async () => {
-      try {
-        const spiedNext = sinon.spy()
-        await weatherController.get(requestWithValidCountryAndCity, responseForRequestWithValidCountryAndCity, spiedNext)
-        debug('responseForRequestWithValidCountryAndCity', responseForRequestWithValidCountryAndCity)
-        const statusCode = responseForRequestWithValidCountryAndCity.statusCode
-        const body = responseForRequestWithValidCountryAndCity._getData()
+      const spiedNext = sinon.spy()
+      await weatherController.get(requestWithValidCountryAndCity, responseForRequestWithValidCountryAndCity, spiedNext)
+      const statusCode = responseForRequestWithValidCountryAndCity.statusCode
+      const body = responseForRequestWithValidCountryAndCity._getData()
+      debug('statusCode', statusCode)
+      debug('body', body)
 
-        expect(statusCode, 'status code should be 200').to.equal(200)
-        expect(body, 'should have body').to.exist
-        expect(body.weather, 'should have weather as few clouds').to.equal('few clouds')
-        expect(spiedNext.called, 'next should NOT be called').to.be.false
-      } catch (error) {
-        expect(error, 'should NOT have any error').to.not.exist
-      }
+      expect(statusCode, 'status code should be 200').to.equal(200)
+      expect(body, 'should have body').to.exist
+      expect(body.weather, 'should have weather as few clouds').to.equal('few clouds')
+      expect(spiedNext.called, 'next should NOT be called').to.be.false
     })
     it('should return NotFoundError for unknown country and city', async () => {
-      try {
-        const spiedNext = sinon.spy()
-        await weatherController.get(requestWithInvalidCountryAndCity, responseForRequestWithInvalidCountryAndCity, spiedNext)
-        const nextCalledWith = spiedNext.args[0]
-        debug('nextCalledWith', nextCalledWith)
+      const spiedNext = sinon.spy()
+      await weatherController.get(requestWithInvalidCountryAndCity, responseForRequestWithInvalidCountryAndCity, spiedNext)
+      const nextCalledWith = spiedNext.args[0][0]
+      debug('nextCalledWith', nextCalledWith)
 
-        expect(spiedNext.called, 'next should be called').to.be.true
-        expect(nextCalledWith.name === NotFoundError.name, 'should call next with NotFoundError error').to.be.true
-      } catch (error) {
-        expect(error, 'should NOT have any error').to.not.exist
-      }
+      expect(spiedNext.called, 'next should be called').to.be.true
+      expect(nextCalledWith.name === 'NotFoundError', 'should call next with NotFoundError error').to.be.true
     })
     it('should return BadRequestError for missing paramters', async () => {
-      try {
-        const spiedNext = sinon.spy()
-        await weatherController.get(requestWithMissingParameters, responseForRequestWithMissingParameters, spiedNext)
-        const nextCalledWith = spiedNext.args[0]
-        debug('nextCalledWith', nextCalledWith)
+      const spiedNext = sinon.spy()
+      await weatherController.get(requestWithMissingParameters, responseForRequestWithMissingParameters, spiedNext)
+      const nextCalledWith = spiedNext.args[0][0]
+      debug('nextCalledWith', nextCalledWith)
 
-        expect(spiedNext.called, 'next should be called').to.be.true
-        expect(nextCalledWith.name === BadRequestError.name, 'should call next with BadRequestError error').to.be.true
-      } catch (error) {
-        expect(error, 'should NOT have any error').to.not.exist
-      }
+      expect(spiedNext.called, 'next should be called').to.be.true
+      expect(nextCalledWith.name === 'BadRequestError', 'should call next with BadRequestError error').to.be.true
     })
     it('should return InternalServerError for missing paramters', async () => {
-      try {
-        const spiedNext = sinon.spy()
-        await weatherController.get(requestToTriggerServerError, responseForRequestToTriggerServerError, spiedNext)
-        const nextCalledWith = spiedNext.args[0]
-        debug('nextCalledWith', nextCalledWith)
+      const spiedNext = sinon.spy()
+      await weatherController.get(requestToTriggerServerError, responseForRequestToTriggerServerError, spiedNext)
+      const nextCalledWith = spiedNext.args[0][0]
+      debug('nextCalledWith', nextCalledWith)
 
-        expect(spiedNext.called, 'next should be called').to.be.true
-        expect(nextCalledWith.name === InternalServerError.name, 'should call next with InternalServerError error').to.be.true
-      } catch (error) {
-        expect(error, 'should NOT have any error').to.not.exist
-      }
+      expect(spiedNext.called, 'next should be called').to.be.true
+      expect(nextCalledWith.name === 'InternalServerError', 'should call next with InternalServerError error').to.be.true
     })
   })
 })
