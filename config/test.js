@@ -5,5 +5,10 @@ module.exports = {
   },
   logger: {
     level: 'debug'
+  },
+  apiKeyRateLimiter: {
+    limit: 1,
+    unitInSecond: 60,
+    mongoUri: 'mongodb://localhost:27017/jb_weather_test'
   }
 }

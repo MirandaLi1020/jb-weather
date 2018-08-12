@@ -3,3 +3,4 @@
 
 ./sdk/**/*.test.js
 ./weather/**/*.test.js
+./utils/**/*.test.js
