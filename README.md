@@ -4,13 +4,13 @@
 # Application Design Highlights
 
 This application has 3 components
-* A RESTfull API server
-  * Stateless and scalable
-  * Accept and return standard HTTP requests/responses
-* A HTTP request throttle middleware for the server.
-  * Limitted to 5 requests to weather report API per hour per API key
-  * Return rate limiting data as HTTP header https://developer.github.com/v3/#rate-limiting
-* A function to consume OpenWeatherMap API and return weather description to client
+1. A RESTfull API server
+   1. Stateless and scalable
+   2. Accept and return standard HTTP requests/responses
+2. A HTTP request throttle middleware for the server.
+   1. Limitted to 5 requests to weather report API per hour per API key
+   2. Return rate limiting data as HTTP header https://developer.github.com/v3/#rate-limiting
+3. A function to consume OpenWeatherMap API and return weather description to client
 
 # How API Rate Limiter Works
 
