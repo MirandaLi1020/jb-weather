@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "JB Weather API",
   "scripts": {
-    "test": "NODE_ENV=test DEBUG=jb-weather:* mocha --opts ./test/unit-tests.opts",
+    "test": "NODE_ENV=test DEBUG=jb-weather:* mocha --opts ./test/unit-tests.opts --exit",
     "lint": "standard"
   },
   "author": "Yunzhi Hou",
