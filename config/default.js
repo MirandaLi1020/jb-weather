@@ -4,7 +4,7 @@ module.exports = {
     apiKey: process.env.OPEN_WEATHER_API_KEY || 'b7b3881ebdfeb1b7738c7ba85260fb3f' // NEVER PUT API KEY IN SOURCE CODE, this is just for reviewer's convenience, so they do not need to sign up Open Weather Map accounts
   },
   logger: {
-    level: 'info'
+    level: process.env.LOGGER_LEVEL || 'info'
   },
   apiKeyRateLimiter: {
     limit: parseInt(process.env.API_KEY_LIMITER_LIMIT, 10) || 5,

@@ -61,6 +61,11 @@ After mongodb server running, then test using mocha
 npm test
 ```
 
+Integration test for whole server, only for development, do NOT use this test in CI/CD
+```
+npm run integration-test
+```
+
 # How to start a server
 
 To run a mongodb server on localhost at 27017 port
@@ -93,7 +98,7 @@ Send a GET request to server in following format
 GET http://localhost:8080/weather/{Country}/{City}
 ```
 
-With HTTP Basic Auth header, use API key as username, `x` as password
+With `HTTP Basic Authorization` header, use API key as username, `x` as password
 
 ```
 Authorization: Basic ****
@@ -108,8 +113,18 @@ curl -i -u 27f01d68e204427fbeb7c0dff06c7e94:x http://localhost:8080/weather/aust
 You should get a result
 
 ```
-{ "weather": "sunny then rain then strom then sunny" }
+{ "weather": "sunny then rain then strom then sunny again" }
 ```
+
+# Environment variables for deployment
+
+* `OPEN_WEATHER_API_HOST`
+* `OPEN_WEATHER_API_KEY`
+* `LOGGER_LEVEL`
+* `API_KEY_LIMITER_LIMIT`
+* `API_KEY_LIMITER_UNIT_SECOND`
+* `API_KEY_LIMITER_MONGO_URI`
+* `SERVER_PORT`
 
 # Project Files
 
@@ -156,3 +171,9 @@ You should get a result
 * `standard` https://github.com/standard/standard
 * `config` https://github.com/lorenwest/node-config
 * `debug` https://github.com/visionmedia/debug
+* `mongoose` http://http://mongoosejs.com/
+* `restify` https://http://restify.com/
+* `node-fetch` https://github.com/bitinn/node-fetch
+* `node-mocks-http` https://github.com/howardabrams/node-mocks-http
+* `sinon` https://sinonjs.org/
+* `supertest` https://github.com/visionmedia/supertest
