@@ -40,6 +40,9 @@ const createWeatherController = ({ weatherModel }) => {
           }
         }
         if (weatherDescription) {
+          // No cache
+          res.noCache()
+          // Send
           return res.send({
             weather: weatherDescription
           })

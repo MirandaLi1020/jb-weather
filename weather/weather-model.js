@@ -8,10 +8,10 @@ const { SdkErrors } = require('../sdk')
  * @param {object} config Weather model config
  * @return {object} A weather model
  */
-const createWeatherModel = ({ openWatherMapSdk }) => {
+const createWeatherModel = ({ openWeatherMapSdk }) => {
   let weatherModel
 
-  if (openWatherMapSdk) { // Valid config provided
+  if (openWeatherMapSdk) { // Valid config provided
     /**
      * Get weather description from OpenWeatherMap SDK by country and city
      * @param {string} country Country name
@@ -21,7 +21,7 @@ const createWeatherModel = ({ openWatherMapSdk }) => {
     const getWeatherDescriptionByCountryAndCity = async (country = '', city = '') => {
       let weatherData
       try {
-        weatherData = await openWatherMapSdk.getWeatherByCountryAndCity(country, city)
+        weatherData = await openWeatherMapSdk.getWeatherByCountryAndCity(country, city)
         debug('weatherData', weatherData)
       } catch (error) {
         // SDK error handling

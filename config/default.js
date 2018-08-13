@@ -9,6 +9,8 @@ module.exports = {
   apiKeyRateLimiter: {
     limit: parseInt(process.env.API_KEY_LIMITER_LIMIT, 10) || 5,
     unitInSecond: parseInt(process.env.API_KEY_LIMITER_UNIT_SECOND, 10) || 3600,
-    mongoUri: process.env.API_KEY_LIMITER_MONGO_URI || 'mongodb://localhost:27017/jb_weather'
+    mongoUri: process.env.API_KEY_LIMITER_MONGO_URI || 'mongodb://localhost:27017/jb_weather',
+    mongoReconnectTries: 30,
+    mongoReconnectInterval: 1000 // Retry 30 times every 1 second
   }
 }

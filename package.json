@@ -4,7 +4,8 @@
   "description": "JB Weather API",
   "scripts": {
     "test": "NODE_ENV=test DEBUG=jb-weather:* mocha --opts ./test/unit-tests.opts --exit",
-    "lint": "standard"
+    "lint": "standard",
+    "start": "NODE_ENV=development node index.js"
   },
   "author": "Yunzhi Hou",
   "license": "ISC",
