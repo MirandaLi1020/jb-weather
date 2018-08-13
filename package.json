@@ -5,7 +5,8 @@
   "scripts": {
     "test": "NODE_ENV=test DEBUG=jb-weather:* mocha --opts ./test/unit-tests.opts --exit",
     "lint": "standard",
-    "start": "NODE_ENV=development node index.js"
+    "start": "NODE_ENV=development node index.js",
+    "integration-test": "NODE_ENV=development mocha --opts ./test/integration-test.opts --exit"
   },
   "author": "Yunzhi Hou",
   "license": "ISC",
@@ -25,6 +26,7 @@
     "mocha": "^5.2.0",
     "standard": "^11.0.1",
     "node-mocks-http": "^1.7.0",
+    "supertest": "^3.1.0",
     "sinon": "^6.1.5"
   }
 }
