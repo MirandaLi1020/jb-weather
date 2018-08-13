@@ -49,10 +49,10 @@ describe('weather-model tests', () => {
     })
   })
   const validConfig = {
-    openWatherMapSdk: mockOpenWeatherMapSdk
+    openWeatherMapSdk: mockOpenWeatherMapSdk
   }
   const invalidConfig = {
-    openWatherMapSdk: undefined
+    openWeatherMapSdk: undefined
   }
   describe('Creation function tests', () => {
     const weatherModelToBeSuccessfullyCreated = WeatherModel.create(validConfig)

@@ -73,6 +73,7 @@ describe('weather-controller tests', () => {
       }
     })
     const responseForRequestWithValidCountryAndCity = httpMocks.createResponse()
+    responseForRequestWithValidCountryAndCity.noCache = () => {}
 
     const requestWithInvalidCountryAndCity = httpMocks.createRequest({
       method: 'GET',
@@ -83,6 +84,7 @@ describe('weather-controller tests', () => {
       }
     })
     const responseForRequestWithInvalidCountryAndCity = httpMocks.createResponse()
+    responseForRequestWithInvalidCountryAndCity.noCache = () => {}
 
     const requestWithMissingParameters = httpMocks.createRequest({
       method: 'GET',
@@ -93,6 +95,7 @@ describe('weather-controller tests', () => {
       }
     })
     const responseForRequestWithMissingParameters = httpMocks.createResponse()
+    responseForRequestWithInvalidCountryAndCity.noCache = () => {}
 
     const requestToTriggerServerError = httpMocks.createRequest({
       method: 'GET',
@@ -103,6 +106,7 @@ describe('weather-controller tests', () => {
       }
     })
     const responseForRequestToTriggerServerError = httpMocks.createResponse()
+    responseForRequestToTriggerServerError.noCache = () => {}
 
     it('should have function get', () => {
       expect(weatherController.get, 'function get should exist').to.exist
