@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
+const config = require('config')
 
 const logger = require('./utils/logger')
 const server = require('./server')
 
-server.listen('8080', () => {
+server.listen(config.server.port, () => {
   logger.info(`server listening at ${server.url}`)
 })
 

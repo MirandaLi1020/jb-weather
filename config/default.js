@@ -12,5 +12,8 @@ module.exports = {
     mongoUri: process.env.API_KEY_LIMITER_MONGO_URI || 'mongodb://localhost:27017/jb_weather',
     mongoReconnectTries: 30,
     mongoReconnectInterval: 1000 // Retry 30 times every 1 second
+  },
+  server: {
+    port: process.env.SERVER_PORT || '8080'
   }
 }
