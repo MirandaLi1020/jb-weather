@@ -18,7 +18,9 @@ mongoose.connect(config.apiKeyRateLimiter.mongoUri, {
 })
 
 // Restify plugins
-server.use(restify.plugins.acceptParser(server.acceptable))
+server.use(restify.plugins.acceptParser([
+  'application/json'
+]))
 server.use(restify.plugins.authorizationParser())
 
 // Create controllers
