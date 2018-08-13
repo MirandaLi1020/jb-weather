@@ -51,6 +51,8 @@ describe('api-rate-limiter tests', () => {
     it('should allow 1st API call with valid API key', async () => {
       const spiedNext = sinon.spy()
       const nowInUtcSeconds = Math.floor(Date.now() / 1000)
+      const expectResetRangeStart = nowInUtcSeconds + config.apiKeyRateLimiter.unitInSecond
+      const expectResetRangeFinish = expectResetRangeStart + 1 // The test timeout is 500ms, so the time set on database will not be later than 500ms, use 1 second for integer
       await apiKeyRateLimiter(requestWithValidApiKey, responseForRequestWithValidApiKey, spiedNext)
       const rateLimitLimit = responseForRequestWithValidApiKey.getHeader(HTTP_HEADER_RATE_LIMIT_LIMIT)
       const rateLimitRemaining = responseForRequestWithValidApiKey.getHeader(HTTP_HEADER_RATE_LIMIT_REMAINING)
@@ -63,11 +65,13 @@ describe('api-rate-limiter tests', () => {
       expect(spiedNext.calledWithExactly(), 'next shoud be called with no arguments').to.be.true
       expect(parseInt(rateLimitLimit, 10), 'limit should be 1').to.equal(1)
       expect(parseInt(rateLimitRemaining, 10), 'remaining should be 0').to.equal(0)
-      expect(parseInt(rateLimitReset, 10), 'reset should be in the future').to.be.above(nowInUtcSeconds)
+      expect(parseInt(rateLimitReset, 10), 'reset should be in the range').to.within(expectResetRangeStart, expectResetRangeFinish)
     })
     it('should reject 2nd API call with valid API key, because the limit for test is set to 1 per 60 seconds', async () => {
       const spiedNext = sinon.spy()
       const nowInUtcSeconds = Math.floor(Date.now() / 1000)
+      const expectResetRangeStart = nowInUtcSeconds + config.apiKeyRateLimiter.unitInSecond
+      const expectResetRangeFinish = expectResetRangeStart + 1
       await apiKeyRateLimiter(requestWithValidApiKey, responseForRequestWithValidApiKey, spiedNext)
       const rateLimitLimit = responseForRequestWithValidApiKey.getHeader(HTTP_HEADER_RATE_LIMIT_LIMIT)
       const rateLimitRemaining = responseForRequestWithValidApiKey.getHeader(HTTP_HEADER_RATE_LIMIT_REMAINING)
@@ -82,7 +86,7 @@ describe('api-rate-limiter tests', () => {
       expect(nextCalledWith.name === 'TooManyRequestsError', 'should call next with TooManyRequestsError error').to.be.true
       expect(parseInt(rateLimitLimit, 10), 'limit should be 1').to.equal(1)
       expect(parseInt(rateLimitRemaining, 10), 'remaining should be 0').to.equal(0)
-      expect(parseInt(rateLimitReset, 10), 'reset should be in the future').to.be.above(nowInUtcSeconds)
+      expect(parseInt(rateLimitReset, 10), 'reset should be in the range').to.within(expectResetRangeStart, expectResetRangeFinish)
     })
   })
 
