@@ -28,7 +28,7 @@ This application has 3 components
   * `X-RateLimit-Remaining` | The number of requests remaining in the current rate limit window.
   * `X-RateLimit-Reset` | The time at which the current rate limit window resets in UTC epoch seconds.
 
-# How to Test
+# How to test
 
 JS Lint using standard
 ```
@@ -61,17 +61,93 @@ After mongodb server running, then test using mocha
 npm test
 ```
 
+# How to start a server
+
+To run a mongodb server on localhost at 27017 port
+
+```
+docker run --name mongo_jb_weather -d -p 27017:27017 mongo:3.6
+```
+
+After mongodb server running
+
+```
+npm start
+```
+
+# How to use
+
+Grap a valid API key below
+
+```
+27f01d68e204427fbeb7c0dff06c7e94
+0666075f3b66492995cd7769e92a0af4
+f8cc06f9d83f40eeb0b2ce79d47b71ab
+6c691d392ccf48fa82e39f263409ac3e
+e61b51f45fdd484f9b67b88dc344fabd
+```
+
+Send a GET request to server in following format
+
+```
+GET http://localhost:8080/weather/{Country}/{City}
+```
+
+With HTTP Basic Auth header, use API key as username, `x` as password
+
+```
+Authorization: Basic ****
+```
+
+CURL Samples
+
+```
+curl -i -u 27f01d68e204427fbeb7c0dff06c7e94:x http://localhost:8080/weather/australia/melbourne
+```
+
+You should get a result
+
+```
+{ "weather": "sunny then rain then strom then sunny" }
+```
+
 # Project Files
 
-* `JBHi-Fi_Nodejs_Challenge.pdf` | JB Hi-Fi Node.js programming challenge
-* `README.md` | This file
-* `package.json`
-* `.gitignore` | https://github.com/github/gitignore/blob/master/Node.gitignore
+* [JBHi-Fi_Nodejs_Challenge.pdf](./JBHi-Fi_Nodejs_Challenge.pdf) | JB Hi-Fi Node.js programming challenge
+* [README.md](./README.md) | This file
+* [package.json](./package.json)
+* [.gitignore](./.gitignore) | https://github.com/github/gitignore/blob/master/Node.gitignore
+* [server.js](./server.js) | Restify server
+* [index.js](./index.js) | App startup file
 * `/test`
-  * `unit-tests.opts` | Mocha configuration file for unit tests
+  * [unit-tests.opts](./test/unit-tests.opts) | Mocha configuration file for unit tests
 * `/config`
-  * `default.js` | Default configuration file
-  * `test.js` | configuration for tests
+  * [default.js](./config/default.js) | Default configuration file
+  * [test.js](./config/test.js) | configuration for tests
+* `/sdk`
+  * [index.js](./sdk/index.js)
+  * [sdk-constants.js](./sdk/sdk-constants.js)
+  * [sdk-errors.js](./sdk/sdk-errors.js)
+  * [open-weather-map-sdk.js](./sdk/open-weather-map-sdk.js) | Open Weather Map SDK
+  * `/__tests__`
+    * [open-weather-map-sdk.test.js](./sdk/__tests__/open-weather-map-sdk.test.js)
+* `/utils` | Utilities components
+  * [index.js](./utils/index.js)
+  * [logger.js](./utils/logger.js) | Logger using winston
+  * [constants.js](./utils/constants.js)
+  * [api-keys.js](./utils/api-keys.js) | Pre loaded API keys
+  * [api-key-usage-model.js](./utils/api-key-usage-model.js) | Mongoose model for API kay usage
+  * [api-rate-limiter.js](./utils/api-rate-limiter.js) | API rate limiter middleware
+  * `/__tests__`
+    * [api-rate-limiter.test.js](./utils/__tests__/api-rate-limiter.test.js)
+* `/weather` | Weather component folder
+  * [index.js](./weather/index.js)
+  * [weather-model-errors.js](./weather/weather-model-errors.js)
+  * [weather-model.js](./weather/weather-model.js) | Model for weather component
+  * [weather-controller.js](./weather/weather-controller.js) | API Controller for weather component
+  * `__tests__`
+    * [weather-model.test.js](./weather/__tests__/weather-model.test.js)
+    * [weather-controller.test.js](./weather/__tests__/weather-controller.test.js)
 
 # Credits
 
