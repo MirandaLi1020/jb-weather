@@ -66,6 +66,18 @@ Integration test for whole server, only for development, do NOT use this test in
 npm run integration-test
 ```
 
+# How to generate and view test coverage report
+
+Generate report
+```
+npm run test-cover
+```
+
+Serve report on http://localhost:8100
+```
+npm run coverage-http
+```
+
 # How to start a server
 
 To run a mongodb server on localhost at 27017 port

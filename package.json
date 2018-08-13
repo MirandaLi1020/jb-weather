@@ -6,7 +6,9 @@
     "test": "NODE_ENV=test DEBUG=jb-weather:* mocha --opts ./test/unit-tests.opts --exit",
     "lint": "standard",
     "start": "NODE_ENV=development node index.js",
-    "integration-test": "NODE_ENV=development mocha --opts ./test/integration-test.opts --exit"
+    "integration-test": "NODE_ENV=development mocha --opts ./test/integration-test.opts --exit",
+    "test-cover": "NODE_ENV=test istanbul cover _mocha -- --opts ./test/unit-tests.opts",
+    "coverage-http": "http-server -p 8100 ./coverage/lcov-report"
   },
   "author": "Yunzhi Hou",
   "license": "ISC",
@@ -23,6 +25,8 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "istanbul": "^1.1.0-alpha.1",
+    "http-server": "^0.11.1",
     "mocha": "^5.2.0",
     "standard": "^11.0.1",
     "node-mocks-http": "^1.7.0",
