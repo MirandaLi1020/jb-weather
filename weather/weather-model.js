@@ -18,7 +18,7 @@ const createWeatherModel = ({ openWeatherMapSdk }) => {
      * @param {string} city City name
      * @return {Promise} Weather description as Promise
      */
-    const getWeatherDescriptionByCountryAndCity = async (country = '', city = '') => {
+    const getWeatherDescriptionByCountryAndCity = async (/* istanbul ignore next */ country = '', /* istanbul ignore next */ city = '') => {
       let weatherData
       try {
         weatherData = await openWeatherMapSdk.getWeatherByCountryAndCity(country, city)
@@ -32,6 +32,7 @@ const createWeatherModel = ({ openWeatherMapSdk }) => {
             throw new Error(AccessDeniedError)
           case SdkErrors.RetryableError:
             throw new Error(PleaseRetryError)
+          /* istanbul ignore next */
           default:
             // Unhandled sdk errors, log and return NotFoundWeatherByCountryAndCityError
             logger.error(`weather-model: unhandled sdk error: ${error}`)
@@ -40,6 +41,7 @@ const createWeatherModel = ({ openWeatherMapSdk }) => {
       }
 
       // Return only weather description
+      /* istanbul ignore else */
       if (weatherData && weatherData.weather && weatherData.weather[0] && weatherData.weather[0].description) {
         return weatherData.weather[0].description
       } else {

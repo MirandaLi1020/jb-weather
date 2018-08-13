@@ -24,7 +24,7 @@ const INVALID_API_KEY = 'INVALID_API_KEY'
  * @param {string} text Response body as text
  * @return {Promise} A Fetch response
  */
-const createFetchMockResponse = async (ok = false, status = 500, json, text) => {
+const createFetchMockResponse = async (/* istanbul ignore next */ ok = false, /* istanbul ignore next */ status = 500, json, text) => {
   const response = {
     ok: ok,
     status: status
@@ -32,11 +32,6 @@ const createFetchMockResponse = async (ok = false, status = 500, json, text) => 
   if (json) {
     response.json = async () => {
       return json
-    }
-  }
-  if (text) {
-    response.text = async () => {
-      return text
     }
   }
   return response
@@ -76,6 +71,7 @@ const mockFetchLib = async (url) => {
     // This URL will trigger a server error response
     case `${VALID_API_HOST}${SdkConstants.WEATHER_API_PATH}?${SdkConstants.WEATHER_API_QUERY_BY_CITY_NAME}=${MOCK_TRIGGER_SERVER_ERROR_CITY},${MOCK_TRIGGER_SERVER_ERROR_COUNTRY}&${SdkConstants.WEATHER_API_QUERY_API_KEY}=${VALID_API_KEY}`:
       return mockServerErrorResponse
+    /* istanbul ignore next */
     default:
       throw new Error('Not implemented mockup')
   }
@@ -128,8 +124,7 @@ describe('open-weather-map-sdk tests', () => {
     })
     it('should return NotFoundError for invalid country and city name', async () => {
       try {
-        const result = await openWeatherMapSdk.getWeatherByCountryAndCity(MOCK_INVALID_COUNTRY, MOCK_INVALID_CITY)
-        expect(result, 'should NOT have any result').to.not.exist
+        await openWeatherMapSdk.getWeatherByCountryAndCity(MOCK_INVALID_COUNTRY, MOCK_INVALID_CITY)
       } catch (error) {
         debug('error', error)
         expect(error.message, 'should return NotFoundError').to.equal(SdkErrors.NotFoundError)
@@ -137,8 +132,7 @@ describe('open-weather-map-sdk tests', () => {
     })
     it('should return RetryableError for 500 response status', async () => {
       try {
-        const result = await openWeatherMapSdk.getWeatherByCountryAndCity(MOCK_TRIGGER_SERVER_ERROR_COUNTRY, MOCK_TRIGGER_SERVER_ERROR_CITY)
-        expect(result, 'should NOT have any result').to.not.exist
+        await openWeatherMapSdk.getWeatherByCountryAndCity(MOCK_TRIGGER_SERVER_ERROR_COUNTRY, MOCK_TRIGGER_SERVER_ERROR_CITY)
       } catch (error) {
         debug('error', error)
         expect(error.message, 'should return RetryableError').to.equal(SdkErrors.RetryableError)
@@ -146,8 +140,7 @@ describe('open-weather-map-sdk tests', () => {
     })
     it('should return UnauthorizedError for invalid API key', async () => {
       try {
-        const result = await openWeatherMapSdkWithInvalidApiKey.getWeatherByCountryAndCity(MOCK_VALID_COUNTRY, MOCK_VALID_CITY)
-        expect(result, 'should NOT have any result').to.not.exist
+        await openWeatherMapSdkWithInvalidApiKey.getWeatherByCountryAndCity(MOCK_VALID_COUNTRY, MOCK_VALID_CITY)
       } catch (error) {
         debug('error', error)
         expect(error.message, 'should return UnauthorizedError').to.equal(SdkErrors.UnauthorizedError)

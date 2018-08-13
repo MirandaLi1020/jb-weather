@@ -88,6 +88,7 @@ describe('api-rate-limiter tests', () => {
 
   after(async () => {
     // Drop database after test
+    /* istanbul ignore else */
     if (mongoose.connection.readyState) {
       await mongoose.connection.db.dropDatabase()
       await mongoose.disconnect()

@@ -30,15 +30,18 @@ const createWeatherController = ({ weatherModel }) => {
           switch (error.message) {
             case WeatherModelErrors.NotFoundWeatherByCountryAndCityError:
               return next(new NotFoundError('Could not find weather'))
+            /* istanbul ignore next */
             case WeatherModelErrors.AccessDeniedError: // Normally access denied error should not happen, might be OpenWeatherMap API limit reached, retry might be success
             case WeatherModelErrors.PleaseRetryError:
               return next(new InternalServerError('Server error, please retry'))
+            /* istanbul ignore next */
             default:
               // Unhandled model errors, log and return NotFoundError
               logger.error(`weather-controller: unhandled model error: ${error}`)
               return next(new NotFoundError('Could not find weather'))
           }
         }
+        /* istanbul ignore else */
         if (weatherDescription) {
           // No cache
           res.noCache()

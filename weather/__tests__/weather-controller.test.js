@@ -22,6 +22,7 @@ const MOCK_TRIGGER_RETRYABLE_ERROR_CITY = 'please_retry'
 
 const mockWeatherModel = {
   getWeatherDescriptionByCountryAndCity: async (country, city) => {
+    /* istanbul ignore else */
     if (country === MOCK_VALID_COUNTRY && city === MOCK_VALID_CITY) {
       // Valid country + valid city returns weather description
       return 'few clouds'
@@ -84,6 +85,7 @@ describe('weather-controller tests', () => {
       }
     })
     const responseForRequestWithInvalidCountryAndCity = httpMocks.createResponse()
+    /* istanbul ignore next */
     responseForRequestWithInvalidCountryAndCity.noCache = () => {}
 
     const requestWithMissingParameters = httpMocks.createRequest({
@@ -95,6 +97,7 @@ describe('weather-controller tests', () => {
       }
     })
     const responseForRequestWithMissingParameters = httpMocks.createResponse()
+    /* istanbul ignore next */
     responseForRequestWithInvalidCountryAndCity.noCache = () => {}
 
     const requestToTriggerServerError = httpMocks.createRequest({
@@ -106,6 +109,7 @@ describe('weather-controller tests', () => {
       }
     })
     const responseForRequestToTriggerServerError = httpMocks.createResponse()
+    /* istanbul ignore next */
     responseForRequestToTriggerServerError.noCache = () => {}
 
     it('should have function get', () => {

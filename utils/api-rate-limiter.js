@@ -13,6 +13,7 @@ const apiKeyRateLimiterLimit = config.apiKeyRateLimiter.limit
 const apiKeyRateLimiterUnitInSecond = config.apiKeyRateLimiter.unitInSecond
 
 const createApiRateLimiter = async (req, res, next) => {
+  /* istanbul ignore else */
   if (mongoose.connection.readyState) {
     // Check is API key provided
     const apiKey = req.username && req.username.toLowerCase()
@@ -32,10 +33,11 @@ const createApiRateLimiter = async (req, res, next) => {
           upsert: true, // Create if not exist
           setDefaultsOnInsert: true // Set default value on creation
         }).exec()
+        /* istanbul ignore else */
         if (usageDoc) {
           // Check usage
           const isOverLimit = (usageDoc.usage > apiKeyRateLimiterLimit)
-          const remainingUsage = (usageDoc.usage >= apiKeyRateLimiterLimit) ? 0 : (apiKeyRateLimiterLimit - usageDoc.usage)
+          const remainingUsage = (usageDoc.usage >= apiKeyRateLimiterLimit) ? 0 : /* istanbul ignore next */ (apiKeyRateLimiterLimit - usageDoc.usage)
           const reset = Math.floor(usageDoc.usedAt.getTime() / 1000) + apiKeyRateLimiterUnitInSecond // Reset is in UTC second
           debug('isOverLimit', isOverLimit)
           debug('remainingUsage', remainingUsage)
@@ -58,7 +60,9 @@ const createApiRateLimiter = async (req, res, next) => {
         }
       } catch (error) {
         // Database error, log and return InternalServerError
+        /* istanbul ignore next */
         logger.error(`api-rate-limiter: database error: ${error}`)
+        /* istanbul ignore next */
         return next(new InternalServerError())
       }
     } else {

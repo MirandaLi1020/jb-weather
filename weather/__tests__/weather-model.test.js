@@ -24,6 +24,7 @@ const MOCK_TRIGGER_INVALID_API_KEY_ERROR_CITY = 'invalid_api_key'
 
 const mockOpenWeatherMapSdk = {
   getWeatherByCountryAndCity: async (country, city) => {
+    /* istanbul ignore else */
     if (country === MOCK_VALID_COUNTRY && city === MOCK_VALID_CITY) {
       // Valid country + valid city returns weather data
       return { 'coord': { 'lon': -0.13, 'lat': 51.51 }, 'weather': [{ 'id': 300, 'main': 'Drizzle', 'description': 'light intensity drizzle', 'icon': '09d' }], 'base': 'stations', 'main': { 'temp': 280.32, 'pressure': 1012, 'humidity': 81, 'temp_min': 279.15, 'temp_max': 281.15 }, 'visibility': 10000, 'wind': { 'speed': 4.1, 'deg': 80 }, 'clouds': { 'all': 90 }, 'dt': 1485789600, 'sys': { 'type': 1, 'id': 5091, 'message': 0.0103, 'country': 'GB', 'sunrise': 1485762037, 'sunset': 1485794875 }, 'id': 2643743, 'name': 'London', 'cod': 200 }
@@ -79,8 +80,7 @@ describe('weather-model tests', () => {
     })
     it('should return NotFoundWeatherByCountryAndCityError for invalid country and city name', async () => {
       try {
-        const result = await weatherModel.getWeatherDescriptionByCountryAndCity(MOCK_INVALID_COUNTRY, MOCK_INVALID_CITY)
-        expect(result, 'should NOT have any result').to.not.exist
+        await weatherModel.getWeatherDescriptionByCountryAndCity(MOCK_INVALID_COUNTRY, MOCK_INVALID_CITY)
       } catch (error) {
         debug('error', error)
         expect(error.message, 'should return NotFoundWeatherByCountryAndCityError').to.equal(WeatherModelErrors.NotFoundWeatherByCountryAndCityError)
@@ -88,8 +88,7 @@ describe('weather-model tests', () => {
     })
     it('should return PleaseRetryError for server errors from Open Weather Map API', async () => {
       try {
-        const result = await weatherModel.getWeatherDescriptionByCountryAndCity(MOCK_TRIGGER_SERVER_ERROR_COUNTRY, MOCK_TRIGGER_SERVER_ERROR_CITY)
-        expect(result, 'should NOT have any result').to.not.exist
+        await weatherModel.getWeatherDescriptionByCountryAndCity(MOCK_TRIGGER_SERVER_ERROR_COUNTRY, MOCK_TRIGGER_SERVER_ERROR_CITY)
       } catch (error) {
         debug('error', error)
         expect(error.message, 'should return PleaseRetryError').to.equal(WeatherModelErrors.PleaseRetryError)
@@ -97,8 +96,7 @@ describe('weather-model tests', () => {
     })
     it('should return AccessDeniedError for invalid API key or over limit errors from Open Weahter Map API', async () => {
       try {
-        const result = await weatherModel.getWeatherDescriptionByCountryAndCity(MOCK_TRIGGER_INVALID_API_KEY_ERROR_COUNTRY, MOCK_TRIGGER_INVALID_API_KEY_ERROR_CITY)
-        expect(result, 'should NOT have any result').to.not.exist
+        await weatherModel.getWeatherDescriptionByCountryAndCity(MOCK_TRIGGER_INVALID_API_KEY_ERROR_COUNTRY, MOCK_TRIGGER_INVALID_API_KEY_ERROR_CITY)
       } catch (error) {
         debug('error', error)
         expect(error.message, 'should return AccessDeniedError').to.equal(WeatherModelErrors.AccessDeniedError)
