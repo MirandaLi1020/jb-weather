@@ -1,0 +1,137 @@
+swagger: "2.0"
+info:
+  description: "A HTTP REST API that fronts the OpenWeatherMap service"
+  version: "1.0.0"
+  title: "JB Weather API"
+basePath: "/"
+tags:
+- name: "weather"
+  description: "Weather related APIs"
+schemes:
+- "http"
+paths:
+  /weahter/{country}/{city}:
+    get:
+      tags:
+      - "weather"
+      summary: "Get weather description by country and city"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "country"
+        in: "path"
+        description: "Country name"
+        required: true
+        type: "string"
+      - name: "city"
+        in: "path"
+        description: "City name"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful get weather description"
+          headers:
+            X-RateLimit-Limit:
+              type: integer
+              description: Request limit per time window.
+            X-RateLimit-Remaining:
+              type: integer
+              description: The number of requests left for the time window.
+            X-RateLimit-Reset:
+              type: integer
+              description: The UTC seconds at which the current rate limit window resets.
+          schema:
+            $ref: "#/definitions/WeatherResult"
+        400:
+          $ref: "#/responses/BadRequest"
+        404:
+          $ref: "#/responses/NotFound"
+        401:
+          $ref: "#/responses/Unauthorized"
+        429:
+          $ref: "#/responses/TooManyRequestsError"
+      security:
+      - basicAuth: []
+securityDefinitions:
+  basicAuth:
+    type: "basic"
+    description: "Username is API key, password is x"
+responses:
+  NotFound:
+    description: "Not found error"
+    schema:
+      $ref: "#/definitions/NotFoundError"
+  BadRequest:
+    description: "Bad request error"
+    schema:
+      $ref: "#/definitions/BadRequestError"
+  Unauthorized:
+    description: "Unauthorized error"
+    schema:
+      $ref: "#/definitions/UnauthorizedError"
+  TooManyRequestsError:
+    headers:
+            X-RateLimit-Limit:
+              type: integer
+              description: Request limit per time window.
+            X-RateLimit-Remaining:
+              type: integer
+              description: The number of requests left for the time window.
+            X-RateLimit-Reset:
+              type: integer
+              description: The UTC seconds at which the current rate limit window resets.
+    description: "Too many requests error"
+    schema:
+      $ref: "#/definitions/TooManyRequestsError"
+definitions:
+  WeatherResult:
+    type: "object"
+    properties:
+      weather:
+        type: "string"
+    example:
+      weather: "sunny then rain then strom then sunny again"
+  NotFoundError:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+      message:
+        type: "string"
+    example:
+      code: "NotFoundError"
+      message: "Could not find weather"
+  BadRequestError:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+        description: "NotFoundError"
+      message:
+        type: "string"
+    example:
+      code: "BadRequestError"
+      message: "Missing parameter: country or city"
+  UnauthorizedError:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+        description: "NotFoundError"
+      message:
+        type: "string"
+    example:
+      code: "UnauthorizedError"
+      message: "API Key required"
+  TooManyRequestsError:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+        description: "NotFoundError"
+      message:
+        type: "string"
+    example:
+      code: "TooManyRequestsError"
+      message: ""

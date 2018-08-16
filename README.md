@@ -142,6 +142,7 @@ You should get a result
 
 * [JBHi-Fi_Nodejs_Challenge.pdf](./JBHi-Fi_Nodejs_Challenge.pdf) | JB Hi-Fi Node.js programming challenge
 * [README.md](./README.md) | This file
+* [swagger.yaml](./swagger.yaml) | API definition file
 * [package.json](./package.json)
 * [.gitignore](./.gitignore) | https://github.com/github/gitignore/blob/master/Node.gitignore
 * [server.js](./server.js) | Restify server
